@@ -1,0 +1,3 @@
+FROM supplantr/golang-toolbox
+
+RUN dnf install -y perl

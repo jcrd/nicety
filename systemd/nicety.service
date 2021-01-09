@@ -1,0 +1,9 @@
+[Unit]
+Description=Process priority management daemon
+
+[Service]
+ExecStart=/usr/bin/nicety -a
+ExecReload=/usr/bin/kill -HUP $MAINPID
+
+[Install]
+WantedBy=multi-user.target

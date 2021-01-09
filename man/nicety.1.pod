@@ -1,0 +1,50 @@
+=head1 NAME
+
+nicety - process priority management daemon
+
+=head1 SYNOPSIS
+
+B<nicety> [options]
+
+=head1 DESCRIPTION
+
+nicety manages the priority of processes based on udev-like rules.
+
+=head1 OPTIONS
+
+=over
+
+=item B<-V>
+
+Print additional output.
+
+=item B<-a>
+
+Affect existing processes.
+
+=item B<-d>
+
+Path to rules directory.
+
+=item B<-s>
+
+Default delay in seconds.
+
+=item B<-v>
+
+Show version.
+
+=back
+
+=head1 AUTHOR
+
+James Reed E<lt>jcrd@tuta.ioE<gt>
+
+=head1 REPORTING BUGS
+
+Bugs and issues can be reported here:
+L<https://github.com/jcrd/nicety/issues>
+
+=head1 COPYRIGHT
+
+Copyright 2021 James Reed. nicety is licensed under the MIT License.
