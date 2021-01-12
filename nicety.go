@@ -20,6 +20,7 @@ import (
     "runtime"
     "strconv"
     "strings"
+    "sync/atomic"
     "syscall"
     "time"
 )
@@ -39,13 +40,21 @@ type Rule struct {
 
 type Rules map[string]Rule
 
-var globalRules Rules
+var globalRules atomic.Value
 
 var digitsRegexp = regexp.MustCompile("[[:digit:]]+")
 var numCPU = runtime.NumCPU()
 var logErr = log.New(os.Stderr, "", 0)
 
 var verbose = false
+
+func getRules() Rules {
+    return globalRules.Load().(Rules)
+}
+
+func setRules(rs Rules) {
+    globalRules.Store(rs)
+}
 
 func loadRule(path string) (r Rule, err error) {
     f, err := ioutil.ReadFile(path)
@@ -305,14 +314,16 @@ func main() {
         logErr.Fatal("root permissions required")
     }
 
-    globalRules = loadRules(*rulesPath)
-    if globalRules == nil {
+    rs := loadRules(*rulesPath)
+    if rs == nil {
         logErr.Fatal("No valid rules exist; exiting")
     }
 
     if *apply {
-        globalRules.apply()
+        rs.apply()
     }
+
+    setRules(rs)
 
     ctx, cancel := context.WithCancel(context.Background())
     extrace := exec.CommandContext(ctx, "/usr/bin/extrace", "-f", "-q")
@@ -356,7 +367,7 @@ func main() {
         select {
         case text := <-scanText:
             pid, comm := parseText(text)
-            if rule, ok := globalRules.match(comm); ok {
+            if rule, ok := getRules().match(comm); ok {
                 go func() {
                     s := *delay
                     if rule.Delay != nil {
@@ -373,12 +384,12 @@ func main() {
         case err := <-scanErr:
             logErr.Fatal(err)
         case <-reload:
-            rules := loadRules(*rulesPath)
-            if rules != nil {
-                globalRules = rules
+            rs := loadRules(*rulesPath)
+            if rs != nil {
+                setRules(rs)
             }
         case <-reapply:
-            globalRules.apply()
+            getRules().apply()
         case <-wait:
             os.Exit(128)
         }
