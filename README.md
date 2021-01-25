@@ -8,6 +8,18 @@ nicety is a process priority management daemon for Linux that sets a process's:
 
 based on udev-like rules.
 
+## Packages
+
+* **RPM** package available from [copr][1]. [![Copr build status](https://copr.fedorainfracloud.org/coprs/jcrd/nicety/package/nicety/status_image/last_build.png)](https://copr.fedorainfracloud.org/coprs/jcrd/nicety/package/nicety/)
+
+  Install with:
+  ```
+  dnf copr enable jcrd/nicety
+  dnf install nicety
+  ```
+
+[1]: https://copr.fedorainfracloud.org/coprs/jcrd/nicety/
+
 ## Usage
 
 Create rules in the `/etc/nicety/rules.d` directory.
