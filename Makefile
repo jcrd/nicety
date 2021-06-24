@@ -10,8 +10,8 @@ MANPAGE = nicety.1
 
 all: nicety $(MANPAGE)
 
-nicety: nicety.go
-	go build -ldflags="-X 'main.version=$(VERSION)'" $<
+nicety: main.go
+	go build -ldflags="-X 'main.version=$(VERSION)'" -o $@ $<
 
 $(MANPAGE): man/$(MANPAGE).pod
 	pod2man -n=nicety -c=nicety -r=$(VERSION) $< $(MANPAGE)
