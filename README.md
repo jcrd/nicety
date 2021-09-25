@@ -1,5 +1,10 @@
 # nicety
 
+[![CodeQL][codeql-badge]][codeql]
+
+[codeql-badge]: https://github.com/jcrd/nicety/actions/workflows/codeql-analysis.yml/badge.svg
+[codeql]: https://github.com/jcrd/nicety/actions/workflows/codeql-analysis.yml
+
 nicety is a process priority management daemon for Linux that sets a process's:
   - CPU affinity
   - scheduling priority
