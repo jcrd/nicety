@@ -45,7 +45,7 @@ Example rule `/etc/nicety/rules.d/make.rules`:
 ```
 
 Valid keys:
-- `name`: the name of the process cmdline as given in `/proc/<PID>/cmdline`
+- `name`: the name of the process command as given in `/proc/<PID>/comm`
   (required)
 - `cpu_affinity`: bond a process to a given set of CPUs ([man page][taskset])
 - `nice`: alter the scheduling priority ([man page][renice])
